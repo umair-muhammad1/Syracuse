@@ -26,14 +26,21 @@ def syracuse_l(n):
     """retourne la suite de Syracuse de source n
 
     Args:
-        n (int): la source de la suite
+        n (int): la source de la suite (>= 1)
 
     Returns:
-        list: la suite de Syracuse de source n
+        list: la suite de Syracuse de source n jusqu'à 1 inclus
     """
+    if not isinstance(n, int) or n < 1:
+        raise ValueError("n doit être un entier >= 1")
 
-    # votre code ici 
-    l = [ ]
+    l = [n]
+    while l[-1] != 1:
+        u = l[-1]
+        if u % 2 == 0:
+            l.append(u // 2)
+        else:
+            l.append(3 * u + 1)
     return l
 
 def temps_de_vol(l):
@@ -43,16 +50,17 @@ def temps_de_vol(l):
         l (list): la suite de Syracuse
 
     Returns:
-        int: le temps de vol
+        int: le temps de vol (nombre d'itérations pour atteindre 1)
     """
-    
-    # votre code ici
-
-    n = 0
-    return n
+    if not l:
+        return 0
+    return max(0, len(l) - 1)
 
 def temps_de_vol_en_altitude(l):
     """Retourne le temps de vol en altitude d'une suite de Syracuse
+
+    Déf.: nombre d'itérations pendant lesquelles les termes restent
+    STRICTEMENT supérieurs à l'initial n, jusqu'au premier terme <= n.
 
     Args:
         l (list): la suite de Syracuse
@@ -60,12 +68,16 @@ def temps_de_vol_en_altitude(l):
     Returns:
         int: le temps de vol en altitude
     """
-
-    # votre code ici
-
-    n = 0
-    return n
-
+    if not l:
+        return 0
+    n0 = l[0]
+    count = 0
+    for x in l[1:]:
+        if x > n0:
+            count += 1
+        else:
+            break
+    return count
 
 def altitude_maximale(l):
     """retourne l'altitude maximale d'une suite de Syracuse
@@ -74,13 +86,9 @@ def altitude_maximale(l):
         l (list): la suite de Syracuse
 
     Returns:
-        int: l'altitude maximale
+        int: l'altitude maximale (0 si liste vide)
     """
-    
-    # votre code ici
-    
-    n = 0
-    return n
+    return max(l) if l else 0
 
 
 #### Fonction principale
